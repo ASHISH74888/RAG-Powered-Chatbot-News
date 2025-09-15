@@ -29,6 +29,3 @@ A modern chatbot application powered by RAG (Retrieval Augmented Generation) tec
 
 Please refer to the README files in the `frontend/` and `backend/` directories for specific setup instructions.
 
-## License
-
-This project is open source and available under the MIT License.
