@@ -1,0 +1,320 @@
+// Variables
+$primary-color: #2563eb;
+$secondary-color: #4b5563;
+$background-color: #f8fafc;
+$text-color: #1f2937;
+$border-color: #e5e7eb;
+$success-color: #10b981;
+$error-color: #ef4444;
+$chat-bg: #ffffff;
+$user-message-bg: #2563eb;
+$assistant-message-bg: #f3f4f6;
+$shadow-color: rgba(0, 0, 0, 0.1);
+
+// Typography
+$font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+$font-size-sm: 0.875rem;
+$font-size-base: 1rem;
+$font-size-lg: 1.125rem;
+$font-size-xl: 1.25rem;
+
+// Spacing
+$spacing-1: 0.25rem;
+$spacing-2: 0.5rem;
+$spacing-3: 0.75rem;
+$spacing-4: 1rem;
+$spacing-6: 1.5rem;
+$spacing-8: 2rem;
+
+// Mixins
+@mixin card-shadow {
+  box-shadow: 0 4px 6px -1px $shadow-color, 0 2px 4px -2px $shadow-color;
+}
+
+@mixin transition-all {
+  transition: all 0.2s ease-in-out;
+}
+
+// Reset
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: $font-family;
+  font-size: $font-size-base;
+  line-height: 1.5;
+  color: $text-color;
+  background-color: $background-color;
+}
+
+// Chat Container
+.chat-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: $spacing-4;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-4;
+}
+
+// Header
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: $spacing-4;
+  background-color: $chat-bg;
+  border-radius: 12px;
+  @include card-shadow;
+
+  h1 {
+    font-size: $font-size-xl;
+    font-weight: 600;
+    color: $text-color;
+  }
+
+  .actions {
+    button {
+      padding: $spacing-2 $spacing-4;
+      background-color: $error-color;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: $font-size-sm;
+      font-weight: 500;
+      @include transition-all;
+
+      &:hover {
+        background-color: darken($error-color, 10%);
+      }
+    }
+  }
+}
+
+// Message List
+.message-list {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: $spacing-4;
+  background-color: $chat-bg;
+  border-radius: 12px;
+  @include card-shadow;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-4;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $background-color;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $secondary-color;
+    border-radius: 4px;
+  }
+}
+
+// Message
+.message {
+  max-width: 85%;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2;
+
+  &.user {
+    align-self: flex-end;
+
+    .message-content {
+      background-color: $user-message-bg;
+      color: white;
+      border-radius: 16px 16px 4px 16px;
+
+      strong {
+        color: #ffffff;
+        font-weight: 600;
+      }
+    }
+
+    .message-time {
+      align-self: flex-end;
+    }
+  }
+
+  &.assistant {
+    align-self: flex-start;
+
+    .message-content {
+      background-color: $assistant-message-bg;
+      border-radius: 16px 16px 16px 4px;
+      color: $text-color;
+      font-size: $font-size-base;
+      line-height: 1.6;
+
+      p {
+        margin-bottom: $spacing-3;
+        
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+
+      strong {
+        color: $primary-color;
+        font-weight: 600;
+      }
+
+      .list-item {
+        margin-bottom: $spacing-2;
+        padding-left: $spacing-4;
+        position: relative;
+
+        &:before {
+          content: "•";
+          position: absolute;
+          left: 0;
+          color: $primary-color;
+        }
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+
+  .message-content {
+    padding: $spacing-4 $spacing-6;
+    font-size: $font-size-base;
+    line-height: 1.6;
+  }
+
+  .message-time {
+    font-size: $font-size-sm;
+    color: $secondary-color;
+    margin-top: $spacing-1;
+  }
+}
+
+// Empty State
+.empty-state {
+  text-align: center;
+  color: $secondary-color;
+  padding: $spacing-8;
+  font-size: $font-size-lg;
+}
+
+// Error Message
+.error-message {
+  background-color: rgba($error-color, 0.1);
+  color: $error-color;
+  padding: $spacing-4;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: 500;
+}
+
+// Input Area
+.input-area {
+  display: flex;
+  gap: $spacing-3;
+  padding: $spacing-4;
+  background-color: $chat-bg;
+  border-radius: 12px;
+  @include card-shadow;
+
+  input {
+    flex-grow: 1;
+    padding: $spacing-4;
+    border: 1px solid $border-color;
+    border-radius: 8px;
+    font-size: $font-size-base;
+    outline: none;
+    @include transition-all;
+
+    &:focus {
+      border-color: $primary-color;
+      box-shadow: 0 0 0 2px rgba($primary-color, 0.1);
+    }
+
+    &:disabled {
+      background-color: $background-color;
+      cursor: not-allowed;
+    }
+  }
+
+  button {
+    padding: $spacing-4 $spacing-6;
+    background-color: $primary-color;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    @include transition-all;
+    min-width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: $spacing-2;
+
+    &:hover:not(:disabled) {
+      background-color: darken($primary-color, 5%);
+    }
+
+    &:disabled {
+      background-color: $secondary-color;
+      cursor: not-allowed;
+    }
+
+    .loading {
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 1s linear infinite;
+    }
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .chat-container {
+    padding: $spacing-2;
+  }
+
+  .message {
+    max-width: 90%;
+
+    .message-content {
+      padding: $spacing-3 $spacing-4;
+    }
+  }
+
+  .input-area {
+    padding: $spacing-3;
+
+    input {
+      padding: $spacing-3;
+    }
+
+    button {
+      padding: $spacing-3;
+      min-width: 80px;
+    }
+  }
+}
